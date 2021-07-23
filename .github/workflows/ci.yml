@@ -15,10 +15,7 @@ jobs:
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
       -
         name: Build the containers
-        run: docker-compose build
-      -
-        name: Install dependencies
-        run: docker-compose run php composer install
+        run: docker build -t php-south-wales-katas .
       -
         name: Run tests
-        run: docker-compose run php phpunit --testdox --colors=always
+        run: docker run -t php-south-wales-katas phpunit --testdox --colors=always

@@ -2,12 +2,12 @@
 
 ## Building the containers
 
-    docker-compose build
+    docker build -t php-south-wales-katas .
 
 ## Running tests
 
     # PHPUnit
-    docker-compose run php phpunit
+    docker run --rm -t php-south-wales-katas phpunit
 
     # Pest
-    docker-compose run php pest
+    docker run --rm -t php-south-wales-katas pest
