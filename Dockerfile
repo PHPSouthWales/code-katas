@@ -6,3 +6,4 @@ COPY composer.json .
 COPY composer.lock .
 RUN composer validate --strict
 RUN composer install
+COPY . .
