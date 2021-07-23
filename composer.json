@@ -1,5 +1,6 @@
 {
     "name": "php-south-wales/code-katas",
+    "description": "",
     "type": "project",
     "license": "MIT",
     "autoload": {
