@@ -17,5 +17,8 @@ jobs:
         name: Build the containers
         run: docker build -t php-south-wales-katas .
       -
-        name: Run tests
+        name: Run PHPUnit tests
         run: docker run -t php-south-wales-katas phpunit --testdox --colors=always
+      -
+        name: Run Pest tests
+        run: docker run -t php-south-wales-katas pest
