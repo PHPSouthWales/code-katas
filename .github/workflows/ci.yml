@@ -5,6 +5,12 @@ on:
     paths-ignore:
       - '*.md'
 
+env:
+  artifact_dir: ~/artifacts
+  artifact_name: docker-image
+  docker_image_name: php-south-wales-katas
+  docker_image_archive_name: docker-image.tar
+
 jobs:
   build:
     name: Build the containers
@@ -13,16 +19,16 @@ jobs:
       -
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
       -
-        run: docker build -t php-south-wales-katas .
+        run: docker build -t ${{ env.docker_image_name }} .
       -
-        run: mkdir ~/artifacts
+        run: mkdir ${{ env.artifact_dir }}
       -
-        run: docker save php-south-wales-katas > ~/artifacts/docker-image.tar
+        run: docker save ${{ env.docker_image_name }} > ${{ env.artifact_dir }}/${{ env.docker_image_archive_name }}
       -
         uses: actions/upload-artifact@27121b0bdffd731efa15d66772be8dc71245d074 # v2.2.4
         with:
-          name: docker-image
-          path: ~/artifacts
+          name: ${{ env.artifact_name }}
+          path: ${{ env.artifact_dir }}
           retention-days: 1
 
   phpunit:
@@ -34,14 +40,14 @@ jobs:
       -
         uses: actions/download-artifact@3be87be14a055c47b01d3bd88f8fe02320a9bb60 # v2.0.10
         with:
-          name: docker-image
-          path: ~/artifacts
+          name: ${{ env.artifact_name }}
+          path: ${{ env.artifact_dir }}
       -
         run: |
-          cd ~/artifacts
-          docker load < docker-image.tar
+          cd ${{ env.artifact_dir }}
+          docker load < ${{ env.docker_image_archive_name }}
       -
-        run: docker run -t php-south-wales-katas phpunit --testdox --colors=always
+        run: docker run -t ${{ env.docker_image_name }} phpunit --testdox --colors=always
 
   pest:
     name: Run Pest tests
@@ -52,11 +58,11 @@ jobs:
       -
         uses: actions/download-artifact@3be87be14a055c47b01d3bd88f8fe02320a9bb60 # v2.0.10
         with:
-          name: docker-image
-          path: ~/artifacts
+          name: ${{ env.artifact_name }}
+          path: ${{ env.artifact_dir }}
       -
         run: |
-          cd ~/artifacts
-          docker load < docker-image.tar
+          cd ${{ env.artifact_dir }}
+          docker load < ${{ env.docker_image_archive_name }}
       -
-        run: docker run -t php-south-wales-katas pest
+        run: docker run -t ${{ env.docker_image_name }} pest
