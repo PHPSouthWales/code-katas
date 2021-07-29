@@ -10,6 +10,7 @@ env:
   artifact_name: docker-image
   docker_image_name: php-south-wales-katas
   docker_image_archive_name: docker-image.tar
+  php_version: 7.4
 
 jobs:
   build:
@@ -19,7 +20,17 @@ jobs:
       -
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
       -
-        run: docker build -t ${{ env.docker_image_name }} .
+        uses: shivammathur/setup-php@36cb9fb0fccf887130d6c5a3d40a3b3479310026 # 2.12.0
+        with:
+          php-version: ${{ env.php_version }}
+      -
+        run: |
+          curl --output ./ws --location https://github.com/my127/workspace/releases/download/0.1.3/ws
+          chmod +x ws && sudo mv ws /usr/local/bin/ws
+      -
+        run: |
+          ws apply config
+          ws docker images build
       -
         run: mkdir ${{ env.artifact_dir }}
       -
@@ -48,7 +59,6 @@ jobs:
           docker load < ${{ env.docker_image_archive_name }}
       -
         run: docker run -t ${{ env.docker_image_name }} phpunit --testdox --colors=always
-
   pest:
     name: Run Pest tests
     runs-on: ubuntu-latest

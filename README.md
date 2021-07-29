@@ -1,21 +1,19 @@
 # php-south-wales-code-katas
 
-## Building the containers
+## Setup
 
-    docker build -t php-south-wales-katas .
+1. Install [Workspace](https://github.com/my127/workspace).
 
-## Running tests (no volumes)
+1. Generate the configuration files:
 
-    # PHPUnit
-    docker run --rm -t php-south-wales-katas phpunit
+    ws apply config
 
-    # Pest
-    docker run --rm -t php-south-wales-katas pest
+1. Build the containers:
 
-## Running tests (with volumes)
+    ws docker images build
 
-    # PHPUnit
-    docker run --rm -t -v $(pwd):/app php-south-wales-katas phpunit
+1. Run the tests:
 
-    # Pest
-    docker run --rm -t -v $(pwd):/app php-south-wales-katas pest
+    ws phpunit
+
+    ws pest

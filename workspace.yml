@@ -1,0 +1,31 @@
+workspace('php-south-wales-code-katas'):
+  description: A holding repo for code katas completed at PHP South Wales events.
+
+confd('workspace:/tools/workspace/confd'):
+  - { src: Dockerfile, dst: workspace:/Dockerfile }
+
+attribute('docker.images.php.name'): php-south-wales-katas
+
+attribute('php.version'): '8.0'
+
+command('apply config'): |
+  #!php
+  $ws->confd('workspace:/tools/workspace/confd')->apply();
+
+command('docker images build'): |
+  #!bash|@
+  passthru docker build -t @('docker.images.php.name') .
+
+command('pest %'):
+  env:
+    DOCKER_IMAGE_NAME: = @('docker.images.php.name')
+  exec: |
+    #!bash|=
+    passthru docker run -it --rm $DOCKER_IMAGE_NAME pest ={ input.argument('%') }
+
+command('phpunit %'):
+  env:
+    DOCKER_IMAGE_NAME: = @('docker.images.php.name')
+  exec: |
+    #!bash|=
+    passthru docker run -it --rm $DOCKER_IMAGE_NAME phpunit ={ input.argument('%') }
