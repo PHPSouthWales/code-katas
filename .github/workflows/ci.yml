@@ -28,9 +28,9 @@ jobs:
           curl --output ./ws --location https://github.com/my127/workspace/releases/download/0.1.3/ws
           chmod +x ws && sudo mv ws /usr/local/bin/ws
       -
-        run: |
-          ws apply config
-          ws docker images build
+        run: ws apply config
+      -
+        run: ws docker images build
       -
         run: mkdir ${{ env.artifact_dir }}
       -
