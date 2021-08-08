@@ -1,9 +1,15 @@
-FROM php:{{ @('php.version') }}-cli-alpine
+FROM php:{{ @('php.version') }}-cli-alpine AS base
+WORKDIR /app
+
+FROM base AS dev
 ENV PATH=$PATH:/app/vendor/bin
 COPY --from=composer /usr/bin/composer /usr/bin/composer
-WORKDIR /app
 COPY composer.json .
 COPY composer.lock .
 RUN composer validate --strict
 RUN composer install
 COPY . .
+
+FROM dev AS test
+RUN pest
+RUN phpunit --colors=always --testdox
