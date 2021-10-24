@@ -1,0 +1,9 @@
+version: '2.4'
+
+services:
+  php:
+    build:
+      context: .
+    image: php-south-wales-katas
+    volumes:
+      - ./:/app

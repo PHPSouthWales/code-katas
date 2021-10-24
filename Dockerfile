@@ -1,4 +1,4 @@
-FROM php:{{ @('php.version') }}-cli-alpine AS base
+FROM php:8.0-cli-alpine AS base
 WORKDIR /app
 
 FROM base AS dev
