@@ -22,12 +22,22 @@ class Letter
     public function score(): int
     {
         return Collection::make(items: self::$scoresForLetters)
-            ->filter(fn (array $values): bool => Collection::make(items: $values)->contains(key: $this->value))
-            ->pipe(function(Collection $scores) {
-                return $scores->isNotEmpty()
-                    ? $scores->keys()->first()
-                    : 1;
+            ->filter(fn (array $values): bool => $this->isCorrectGroup(values: $values))
+            ->pipe(callback: function(Collection $scores) {
+                return $this->scoreForGroup($scores);
             });
 
+    }
+
+    private function isCorrectGroup(array $values): bool
+    {
+        return Collection::make(items: $values)->contains(key: $this->value);
+    }
+
+    private function scoreForGroup(Collection $scores): int
+    {
+        return $scores->isNotEmpty()
+            ? $scores->keys()->first()
+            : 1;
     }
 }
