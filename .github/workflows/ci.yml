@@ -21,4 +21,3 @@ jobs:
       - run: docker-compose build
       - run: ./run composer install
       - run: ./run test:pest
-      - run: ./run test:phpunit --colors=always --testdox
