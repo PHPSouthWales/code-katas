@@ -15,7 +15,7 @@ function cmd {
 }
 
 function composer {
-  # Run tests with Pest.
+  # Run Composer commands.
   DC=run
   cmd composer "${@}"
 }
