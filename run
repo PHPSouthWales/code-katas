@@ -9,6 +9,12 @@ if [[ ! -t 1 ]]; then
   TTY="-T"
 fi
 
+function ci:test {
+  docker-compose build
+  composer install
+  test:pest
+}
+
 function cmd {
   # Run any command in the php container.
   _dc php "${@}"
