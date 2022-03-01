@@ -28,6 +28,6 @@
         "sort-packages": true
     },
     "require": {
-        "illuminate/collections": "9.x-dev"
+        "illuminate/collections": "^9"
     }
 }
