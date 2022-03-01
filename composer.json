@@ -26,5 +26,8 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "require": {
+        "illuminate/collections": "9.x-dev"
     }
 }
