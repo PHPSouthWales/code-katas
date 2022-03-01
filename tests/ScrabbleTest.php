@@ -2,13 +2,7 @@
 
 use App\Scrabble\Letter;
 
-it('gets the score for a single letter', function (string $value, int $score) {
-    $letter = new Letter(value: $value);
-
-    expect(value: $letter->score())
-        ->toBeInt()
-        ->toBe(expected: $score);
-})->with([
+$lettersAndScores = [
     ['a', 1],
     ['b', 3],
     ['c', 3],
@@ -35,4 +29,12 @@ it('gets the score for a single letter', function (string $value, int $score) {
     ['x', 8],
     ['y', 4],
     ['z', 10],
-]);
+];
+
+it('gets the score for a single letter', function (string $value, int $score) {
+    $letter = new Letter(value: $value);
+
+    expect(value: $letter->score())
+        ->toBeInt()
+        ->toBe(expected: $score);
+})->with(data: $lettersAndScores);
