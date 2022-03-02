@@ -6,6 +6,8 @@ use Illuminate\Support\Collection;
 
 class Letter
 {
+    private const DEFAULT_SCORE = 1;
+
     private static $scoresForLetters = [
         2 => ['d', 'g'],
         3 => ['b', 'c', 'm', 'p'],
@@ -35,6 +37,6 @@ class Letter
     {
         return $scores->isNotEmpty()
             ? $scores->keys()->first()
-            : 1;
+            : self::DEFAULT_SCORE;
     }
 }
