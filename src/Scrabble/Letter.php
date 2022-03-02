@@ -22,11 +22,8 @@ class Letter
     public function score(): int
     {
         return Collection::make(items: self::$scoresForLetters)
-            ->filter(fn (array $values): bool => $this->isCorrectGroup(values: $values))
-            ->pipe(callback: function(Collection $scores) {
-                return $this->scoreForGroup($scores);
-            });
-
+            ->filter(callback: fn (array $values): bool => $this->isCorrectGroup(values: $values))
+            ->pipe(callback: fn (Collection $scores) => $this->scoreForGroup($scores));
     }
 
     private function isCorrectGroup(array $values): bool
