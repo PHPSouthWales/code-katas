@@ -25,7 +25,10 @@
         "phpunit/phpunit": "^9"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "require": {
         "illuminate/collections": "^9"
